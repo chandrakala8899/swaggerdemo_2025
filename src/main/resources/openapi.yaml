@@ -1,0 +1,92 @@
+openapi: 3.0.1
+info:
+  title: Bank Account API
+  version: 1.0.0
+
+paths:
+  /api/accounts:
+    post:
+      summary: Create a new bank account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      responses:
+        "201":
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+    get:
+      summary: Get all bank accounts
+      operationId: getAccounts
+      responses:
+        "200":
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+        accountNumber:
+          type: string
+        customer:
+          $ref: "#/components/schemas/Customer"
+        nominee:
+          $ref: "#/components/schemas/Nominee"
+
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        mobileNumber:
+          type: string
+        address:
+          $ref: "#/components/schemas/Address"
+
+    Nominee:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        relation:
+          type: string
+        percentage:
+          type: number
+          format: float
+        address:
+          $ref: "#/components/schemas/Address"
+
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        pincode:
+          type: string
