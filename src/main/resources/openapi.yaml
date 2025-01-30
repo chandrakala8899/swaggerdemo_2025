@@ -1,92 +1,124 @@
-openapi: 3.0.1
-info:
-  title: Bank Account API
-  version: 1.0.0
-
-paths:
-  /api/accounts:
-    post:
-      summary: Create a new bank account
-      operationId: createAccount
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Account"
-      responses:
-        "201":
-          description: Account created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Account"
-    get:
-      summary: Get all bank accounts
-      operationId: getAccounts
-      responses:
-        "200":
-          description: List of accounts
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
-
-components:
-  schemas:
-    Account:
-      type: object
-      properties:
-        id:
-          type: integer
-        accountNumber:
-          type: string
-        customer:
-          $ref: "#/components/schemas/Customer"
-        nominee:
-          $ref: "#/components/schemas/Nominee"
-
-    Customer:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        email:
-          type: string
-        mobileNumber:
-          type: string
-        address:
-          $ref: "#/components/schemas/Address"
-
-    Nominee:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        relation:
-          type: string
-        percentage:
-          type: number
-          format: float
-        address:
-          $ref: "#/components/schemas/Address"
-
-    Address:
-      type: object
-      properties:
-        id:
-          type: integer
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        pincode:
-          type: string
+#openapi: 3.0.3
+#info:
+#  title: Swagger Customer API
+#  version: 1.0.0
+#  description: API for managing customers
+#
+#servers:
+#  - url: http://localhost:8080
+#
+#tags:
+#  - name: customer
+#    description: Operations related to customer
+#
+#paths:
+#  /api/customers/save:
+#    post:
+#      summary: Create a new customer
+#      operationId: createCustomer
+#      tags:
+#        - customer
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/Customer'
+#      responses:
+#        "201":
+#          description: Customer created successfully
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Customer'
+#        "400":
+#          description: Invalid request payload
+#        "500":
+#          description: Internal server error
+#
+#  /api/customers/all:
+#    get:
+#      summary: Get all customers based on name or adharNumber
+#      operationId: getAllCustomers
+#      tags:
+#        - customer
+#      parameters:
+#        - in: query
+#          name: name
+#          schema:
+#            type: string
+#          description: Name of the customer to filter by.
+#        - in: query
+#          name: adharNumber
+#          schema:
+#            type: string
+#          description: Adhar number to filter customers by.
+#      responses:
+#        "200":
+#          description: List of all customers
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  $ref: '#/components/schemas/Customer'
+#        "500":
+#          description: Internal server error
+#
+#  /api/customers/{Id}:
+#    get:
+#      summary: Get customer by customerId
+#      operationId: getCustomerById
+#      tags:
+#        - customer
+#      parameters:
+#        - in: path
+#          name: Id
+#          required: true
+#          schema:
+#            type: Long
+#          description: The CustomerId of the customer to retrieve.
+#      responses:
+#        "200":
+#          description: Successfully retrieved customer
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/Customer'
+#        "404":
+#          description: Customer not found
+#        "500":
+#          description: Internal server error
+#
+#components:
+#  schemas:
+#    Address:
+#      type: object
+#      properties:
+#        city:
+#          type: string
+#        state:
+#          type: string
+#        pincode:
+#          type: string
+#      required:
+#        - city
+#        - state
+#        - pincode
+#
+#    Customer:
+#      type: object
+#      required:
+#        - firstName
+#        - lastName
+#      properties:
+#        id:
+#          type: Long
+#        adharNumber:
+#          type: string
+#        firstName:
+#          type: string
+#        lastName:
+#          type: string
+#        address:
+#          $ref: '#/components/schemas/Address'
